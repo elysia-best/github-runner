@@ -18,7 +18,9 @@ DOWNLOAD_DIR="$SCRIPT_DIR/../_downloads/netcore2x"
 PACKAGE_DIR="$SCRIPT_DIR/../_package"
 DOTNETSDK_ROOT="$SCRIPT_DIR/../_dotnetsdk"
 DOTNETSDK_VERSION="8.0.412"
+DOTNETSDK_VERSION_LOONG64="8.0.116"
 DOTNETSDK_INSTALLDIR="$DOTNETSDK_ROOT/$DOTNETSDK_VERSION"
+DOTNETSDK_INSTALLDIR_LOONG64="$DOTNETSDK_ROOT/$DOTNETSDK_VERSION_LOONG64"
 RUNNER_VERSION=$(cat runnerversion)
 
 pushd "$SCRIPT_DIR"
@@ -200,7 +202,7 @@ function package ()
 }
 
 # Install .NET SDK
-if [[ (! -d "${DOTNETSDK_INSTALLDIR}") || (! -e "${DOTNETSDK_INSTALLDIR}/.${DOTNETSDK_VERSION}") || (! -e "${DOTNETSDK_INSTALLDIR}/dotnet") ]]; then
+if [[ (! -d "${DOTNETSDK_INSTALLDIR}") || (! -d "${DOTNETSDK_INSTALLDIR_LOONG64}" ) || (! -e "${DOTNETSDK_INSTALLDIR}/.${DOTNETSDK_VERSION}") || (! -e "${DOTNETSDK_INSTALLDIR}/dotnet") ]]; then
 
     # Download dotnet SDK to ../_dotnetsdk directory
     heading "Ensure Dotnet SDK"
@@ -226,7 +228,7 @@ if [[ (! -d "${DOTNETSDK_INSTALLDIR}") || (! -e "${DOTNETSDK_INSTALLDIR}/.${DOTN
 fi
 
 echo "Prepend ${DOTNETSDK_INSTALLDIR} to %PATH%"
-export PATH=${DOTNETSDK_INSTALLDIR}:$PATH
+export PATH=${DOTNETSDK_INSTALLDIR_LOONG64}:${DOTNETSDK_INSTALLDIR}:$PATH
 
 heading "Dotnet SDK Version"
 dotnet --version

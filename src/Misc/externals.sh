@@ -3,10 +3,12 @@ PACKAGERUNTIME=$1
 PRECACHE=$2
 
 NODE_URL=https://nodejs.org/dist
+NODE_URL_LOONG64=https://github.com/loong64/node/releases/download
 NODE_ALPINE_URL=https://github.com/actions/alpine_nodejs/releases/download
 # When you update Node versions you must also create a new release of alpine_nodejs at that updated version.
 # Follow the instructions here: https://github.com/actions/alpine_nodejs?tab=readme-ov-file#getting-started
 NODE20_VERSION="20.19.4"
+NODE20_VERSION_LOONG64="20.17.0"
 NODE24_VERSION="24.5.0"
 
 get_abs_path() {
@@ -186,4 +188,9 @@ fi
 
 if [[ "$PACKAGERUNTIME" == "linux-arm" ]]; then
     acquireExternalTool "$NODE_URL/v${NODE20_VERSION}/node-v${NODE20_VERSION}-linux-armv7l.tar.gz" node20 fix_nested_dir
+fi
+
+if [[ "$PACKAGERUNTIME" == "linux-loong64" ]]; then
+    acquireExternalTool "$NODE_URL/v${NODE20_VERSION_LOONG64}/node-v${NODE20_VERSION_LOONG64}-linux-loong64.tar.gz" node20 fix_nested_dir
+    acquireExternalTool "$NODE_URL/v${NODE24_VERSION}/node-v${NODE24_VERSION}-linux-loong64.tar.gz" node24 fix_nested_dir
 fi
